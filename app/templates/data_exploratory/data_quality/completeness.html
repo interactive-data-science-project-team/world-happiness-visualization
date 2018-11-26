@@ -2,11 +2,13 @@
 <p>
     <b>Are there junk values or missing values?</b>
     There are some missing entries (<code>na</code>) in the original dataset (see table
-    below), especially for GINI index (only 584 records have corresponding
-    World bank estimated GINI index). Some countries are missing certain survey
-    data for all years (for example, China has no corresponding “confidence in
-    national Government data” available). Apart from the GINI index, other
-    columns have very few missing entries.
+    below), especially for GINI index (63% of the data do not have the corresponding
+    World bank estimated GINI index). Some survey questions are not asked in certain countries. 
+    For example, the perception of corruption is not asked in China. 
+    This results in missing values for these attributes for all years in some countries.
+    This may introduce some bias into the data when we perform further analysis using techniques like regression analysis. 
+    Other columns have few missing entries.
+
 </p>
 
 
@@ -14,8 +16,7 @@
             We examined the number of reports each year by country, and we find
             that
             there are significantly less reports collected before 2007 (see the
-            table
-            on the right).
+            table below).
         </p>
 
 <div class="row justify-content-md-center">
