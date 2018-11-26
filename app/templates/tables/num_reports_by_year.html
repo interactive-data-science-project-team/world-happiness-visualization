@@ -1,0 +1,16 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th scope="col">Year</th>
+        <th scope="col">Number of Reports</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for r in num_reports_by_year %}
+    <tr>
+        <th scope="row">{{ r.year }}</th>
+        <td>{{ r.num_countries }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

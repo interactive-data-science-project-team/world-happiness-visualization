@@ -1,0 +1,30 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Count</th>
+        <th scope="col">Mean</th>
+        <th scope="col">Std</th>
+        <th scope="col">Min</th>
+        <th scope="col">Lower Quantile</th>
+        <th scope="col">Median</th>
+        <th scope="col">Upper Quantile</th>
+        <th scope="col">Max</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for r in summary_stats %}
+    <tr>
+        <th scope="row">{{ r.attribute }}</th>
+        <td>{{ r.count }}</td>
+        <td>{{ '%.2f' % r.mean | float }}</td>
+        <td>{{ '%.2f' % r.std | float }}</td>
+        <td>{{ '%.2f' % r.min | float }}</td>
+        <td>{{ '%.2f' % r['25%'] | float }}</td>
+        <td>{{ '%.2f' % r['50%'] | float }}</td>
+        <td>{{ '%.2f' % r['75%'] | float }}</td>
+        <td>{{ '%.2f' % r.max | float }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

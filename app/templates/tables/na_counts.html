@@ -1,0 +1,22 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">NA Count Before Cleaning</th>
+        <th scope="col">NA Percentage Before Cleaning</th>
+        <th scope="col">NA Count After Cleaning</th>
+        <th scope="col">NA Percentage After Cleaning</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for r in na_counts %}
+    <tr>
+        <th scope="row">{{ r.attribute }}</th>
+        <td>{{ r.na_count_before }}</td>
+        <td>{{ '%.2f' % r.na_percentage_before | float }}</td>
+        <td>{{ r.na_count_after }}</td>
+        <td>{{ '%.2f' % r.na_percentage_after | float }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

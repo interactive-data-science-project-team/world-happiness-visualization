@@ -1,0 +1,68 @@
+<h3>Completeness</h3>
+<p>
+    <b>Are there junk values or missing values?</b>
+    There are some missing entries (<code>na</code>) in the original dataset (see table
+    below), especially for GINI index (only 584 records have corresponding
+    World bank estimated GINI index). Some countries are missing certain survey
+    data for all years (for example, China has no corresponding “confidence in
+    national Government data” available). Apart from the GINI index, other
+    columns have very few missing entries.
+</p>
+
+
+        <p>
+            We examined the number of reports each year by country, and we find
+            that
+            there are significantly less reports collected before 2007 (see the
+            table
+            on the right).
+        </p>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-4">
+        {% include 'tables/num_reports_by_year.html' %}
+    </div>
+</div>
+
+<p>
+    <b>How did we handle missing entries?</b> We did preliminary data cleaning
+    using
+    <a href="https://pandas.pydata.org/">pandas</a>.
+    If we have missing data for an
+    attribute, we try to use the last valid observation from the same country to
+    fill in
+    the missing values, <code>df.groupby('country',
+    as_index=False).fillna(method='ffill')</code>.
+    If this fails, we try to use the next valid observation to fill
+    in the missing values, <code>df.groupby('country',
+    as_index=False).fillna(method='bfill')</code>. It's possible that some
+    attributes were not
+    collected for some countries for the entire time period such as the
+    "perception of corruption" attribute for China. In such cases, we leave
+    the values as <code>na</code>. The table below show the number of
+    <code>na</code>
+    's
+    before and after the data cleaning.
+</p>
+
+{% include 'tables/na_counts.html' %}
+
+<p>
+    <b>Is the data relevant?</b> If we want to train a regression model using
+    happiness scores in 2017 as labels and other variates as covariates,
+    then the dataset demonstrates strong correlation between the explanatory variables
+    and the world happiness score, (in the table below, we show scatterplots between
+    the world happiness score and a subset of predictors).
+</p>
+
+<img src="static/images/regplot.png" class="img-fluid mx-auto d-block" alt="RegPlot">
+
+<p>
+    Alternatively, if we
+    want to study how happiness score develops in a country, we can model the
+    happiness score for a country as time series over the years. We show a
+    line chart which depicts how happiness scores of happiest countries in 2017
+    developed in the past few years.
+</p>
+
+<img src="static/images/linechart.png" class="img-fluid mx-auto d-block" alt="LinePlot">

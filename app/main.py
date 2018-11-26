@@ -17,6 +17,18 @@ import logging
 from flask import Flask
 from jinja2 import Environment, PackageLoader
 
+
+# load data
+from utils import read_csv_as_dict
+
+# load static data
+index_page_data_dict = {
+    'na_counts': read_csv_as_dict('data/na_counts.csv'),
+    'summary_stats': read_csv_as_dict('data/summary_stats.csv'),
+    'num_reports_by_year': read_csv_as_dict('data/num_report_by_year.csv')
+}
+
+
 env = Environment(
     loader=PackageLoader('main', 'templates'),
     autoescape=True
@@ -28,13 +40,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     template = env.get_template('index.html')
-    return template.render()
-
-
-@app.route('/about')
-def about():
-    template = env.get_template('about.html')
-    return template.render()
+    return template.render(**index_page_data_dict)
 
 
 @app.errorhandler(500)

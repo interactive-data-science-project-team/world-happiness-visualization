@@ -3,21 +3,84 @@
 {% set active_page = "index" %}
 
 {% block title %}
-    Title.
+    World Happiness Score Data Exploratory Analysis
 {% endblock %}
 
 {% block subtitle %}
-    subtitle
+
 {% endblock %}
 
 {% block content %}
 
-    <h2>Intro</h2>
+    <h2>Introduction</h2>
 
     <hr>
 
     <p>
-        Intro
+        The dataset was collected by the <a href="http://unsdsn.org/">United
+        Nations Sustainable Development
+        Solutions Network</a> to produce the <a
+            href="http://worldhappiness.report/">World Happiness Report</a>,
+        its annual
+        publication that surveys the state of global happiness. The dataset
+        includes the happiness score for each country, their socioeconomic
+        attributes such as the GDP per capita, social support and healthy life
+        expectancy at birth, and the survey responses such as social support
+        and freedom to make life choices. The data covers the years from 2005
+        to 2017.
     </p>
 
+    {% include 'tableau_viz/happiness_score_map.html' %}
+
+    <hr>
+
+    <h2>About the Dataset</h2>
+
+    <hr>
+
+    <p>
+        <b>How did we access the dataset?</b> This data is public and can be accessed
+        <a href="http://worldhappiness.report/ed/2018/">here</a>. A description and variable definitions are available
+        <a href="https://s3.amazonaws.com/happiness-report/2018/Appendix1ofChapter2.pdf">here</a>.
+    </p>
+
+    <p>
+        <b>How was the data collected?</b> The happiness score was collected by
+        the author of the World Happiness Report from the <a
+            href="https://www.gallup.com/analytics/232838/world-poll.aspx">Gallup
+        World Poll
+        (GWP)</a>. Unless stated otherwise, it is the national average response
+        to
+        the question of life evaluations. The English wording of the question
+        is
+    </p>
+
+        <blockquote class="blockquote">
+            <p>
+                Please imagine a ladder, with steps numbered from 0 at the
+                bottom
+                to 10 at the top. The top of the ladder represents the best possible
+                life for you and the bottom of the ladder represents the worst possible
+                life for you. On which step of the ladder would you say you personally
+                feel you stand at this time?
+            </p>
+       </blockquote>
+
+    <p>
+        The attributes that come from survey responses such as social support
+        and freedom to make life choices was collected by the author of the
+        report from GWP.
+        Socioeconomic attributes such as the GDP per capita, healthy life
+        expectancy are collected and calculated by the authors from <a href="http://wdi.worldbank.org/tables">
+        World Development Indicators (WDI) </a> and
+        <a href="http://www.who.int/">World Health Organization (WHO)</a>.
+    </p>
+
+    <h2>Data Quality, 4Cs</h2>
+    <hr>
+
+    {% include 'data_quality/completeness.html' %}
+    {% include 'data_quality/coherence.html' %}
+    {% include 'data_quality/correctness.html' %}
+    {% include 'data_quality/accountability.html' %}
 {% endblock %}
