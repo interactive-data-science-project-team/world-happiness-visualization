@@ -5,19 +5,18 @@
     below), especially for GINI index (63% of the data do not have the corresponding
     World bank estimated GINI index). Some survey questions are not asked in certain countries. 
     For example, the perception of corruption is not asked in China. 
-    This results in missing values for these attributes for all years in some countries.
+    This results in missing values for these attributes from 2005 to 2017 in some countries.
     This may introduce some bias into the data when we perform further analysis using techniques like regression analysis. 
     Other columns have few missing entries.
 
 </p>
 
-
-        <p>
-            We examined the number of reports each year by country, and we find
-            that
-            there are significantly less reports collected before 2007 (see the
-            table below).
-        </p>
+<p>
+    We examined the number of reports each year by country, and we find
+    that
+    there are significantly fewer reports collected before 2007 (see the
+    table below).
+</p>
 
 <div class="row justify-content-md-center">
     <div class="col-lg-4">
@@ -50,10 +49,10 @@
 
 <p>
     <b>Is the data relevant?</b> If we want to train a regression model using
-    happiness scores in 2017 as labels and other variates as covariates,
-    then the dataset demonstrates strong correlation between the explanatory variables
-    and the world happiness score, (in the table below, we show scatterplots between
-    the world happiness score and a subset of predictors).
+    happiness scores in 2017 as labels and other variables as covariates,
+    then the dataset demonstrates a strong correlation between the explanatory variables
+    and the world happiness score. In the table below, we show scatterplots between
+    the world happiness score and a subset of covariates).
 </p>
 
 <img src="static/images/regplot.png" class="img-fluid mx-auto d-block" alt="RegPlot">
@@ -63,7 +62,7 @@
     want to study how happiness score changes over time in a country, we can model the
     happiness score for a country as a time series over the years. We show a
     line chart which depicts how happiness scores of five happiest countries
-    changed in the past few years.
+    changed from 2005 to 2016.
 </p>
 
 <img src="static/images/linechart.png" class="img-fluid mx-auto d-block" alt="LinePlot">

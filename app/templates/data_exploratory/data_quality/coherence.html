@@ -2,23 +2,49 @@
 <p>
     The data is quite coherent. In the table below, we show the summary
     statistics for each continuous variable. The standard deviation for all
-    the variables are relatively small, which suggest that we have very few
+    the variables is relatively small, which suggest that we have very few
     outliers in the dataset.
 </p>
 
 {% include 'tables/summary_stats.html' %}
 
 <p>
-    In the pair plot below, we show the scatter plot between four covariates
+    In the pair plot below, we show the scatter plot between six covariates
     and their respective histogram. The plot shows that the covariates are
-    correlated, which brings challenges for training regression models. Also,
-    The histograms shows that the covariates skewed.
+    correlated, for example, log GDB is strongly correlated with life expectancy at birth.
+    This brings challenges for training regression models. Also,
+    The histograms show that the covariates skewed.
 </p>
 
 <img src="static/images/pairplot.png" class="img-fluid mx-auto d-block" alt="PairPlot">
 
 <p>
-    The histogram (below) of the happiness score resembles a normal distribution.
+    The histogram (below) of the happiness score resembles a normal distribution,
+    but has shorter tails.
 </p>
 
 <img src="static/images/lifeladderhistplot.png" class="img-fluid mx-auto d-block" alt="PairPlot">
+
+<p>
+    The plot below (left) shows the top 10 counties with the highest happiness score in
+    2017. Finland is the highest ranked. The plot on the right shows 10 lowest ranked countries in 2017.
+</p>
+
+<div class="row">
+    <div class="col-xl-6">
+        <img src="static/images/happiestcountries.png" class="img-fluid" alt="PairPlot">
+    </div>
+    <div class="col-xl-6">
+        <img src="static/images/unhappycountries.png" class="img-fluid" alt="PairPlot">
+    </div>
+</div>
+
+<p>
+    The box plots below shows the box plots of happiness score, GDP, life expectancy,
+    and democratic quality from 2005 to 2017. We see that these variables have
+    a consistent distribution over the years, except in 2005. However, since only
+    27 countries reported happiness score in 2005, the data may be biased towards
+    higher ranked countries.
+</p>
+
+<img src="static/images/yearlyhappinessscoreboxplot.png" class="img-fluid mx-auto d-block" alt="PairPlot">

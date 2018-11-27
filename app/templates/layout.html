@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <!-- font awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    {% block stylesheets %}
+    {% endblock %}
+
 </head>
 
 <body role="document">
@@ -20,7 +26,7 @@
 
 <!-- navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">World Happiness Visualization</a>
+    <a class="navbar-brand" href="#">World Happiness Score</a>
 
     {% if navigation_bar | length > 0 %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -62,7 +68,34 @@
 </main>
 
 <footer class="container">
-    <p><a href="https://github.com/interactive-data-science-project-team/word-happiness-visualization">source code</a></p>
+
+    <span class="icon-stack">
+      <i class="icon-github icon-stack-base"></i>
+    </span>
+    <a href="https://github.com/interactive-data-science-project-team/word-happiness-visualization">Source Code</a> <br>
+    <span class="icon-stack">
+      <i class="icon-user icon-stack-base"></i>
+    </span>
+    Peeraya Maetasatidsuk <br>
+    <span class="icon-stack">
+      <i class=" icon-user icon-stack-base"></i>
+    </span>
+    Xuren Zhou <br>
+    <span class="icon-stack">
+      <i class="icon-user icon-stack-base"></i>
+    </span>
+    Weitian Ding <br>
+    <span class="icon-stack">
+      <i class="icon-user icon-stack-base"></i>
+    </span>
+    Wenyan Wu <br>
+
+    <!--
+    <i class="icon-github"></i>Source Code
+
+
+    <a href="https://github.com/interactive-data-science-project-team/word-happiness-visualization">source code</a>
+    -->
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
