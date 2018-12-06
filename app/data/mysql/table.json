@@ -1,0 +1,23 @@
+{
+  "table_name": "score",
+  "columns": [
+    "country",
+    "year",
+    "Happiness_Score",
+    "Log_GDP_per_capita",
+    "Social_support",
+    "Healthy_life_expectancy_at_birth",
+    "Freedom_to_make_life_choices",
+    "Generosity",
+    "Perceptions_of_corruption",
+    "Positive_affect",
+    "Negative_affect",
+    "Confidence_in_national_government",
+    "Democratic_Quality",
+    "Delivery_Quality",
+    "std_of_happiness_score",
+    "stdom_of_happiness_score",
+    "GINI_estimate",
+    "gini_of_household_income"
+  ]
+}

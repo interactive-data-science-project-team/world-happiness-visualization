@@ -17,15 +17,17 @@ import logging
 from flask import Flask
 from jinja2 import Environment, PackageLoader
 
-
 # load data
 from utils import read_csv_as_dict
+from utils import read_json_as_dict
+import json
 
 # load static data
 index_page_data_dict = {
     'na_counts': read_csv_as_dict('data/na_counts.csv'),
     'summary_stats': read_csv_as_dict('data/summary_stats.csv'),
-    'num_reports_by_year': read_csv_as_dict('data/num_report_by_year.csv')
+    'num_reports_by_year': read_csv_as_dict('data/num_report_by_year.csv'),
+    'mysql_table': read_json_as_dict('data/mysql/table.json')
 }
 
 
@@ -48,3 +50,9 @@ def server_error(e):
     # Log the error and stacktrace.
     logging.exception('An error occurred during a request.')
     return 'An internal error occurred.', 500
+
+@app.route('/get_table')
+def get_table():
+    print(type(index_page_data_dict['mysql_table']))
+    return json.dumps(index_page_data_dict['mysql_table'])
+

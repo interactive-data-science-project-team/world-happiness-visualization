@@ -1,0 +1,20 @@
+create table score (
+ country varchar(255),
+ year int,
+ Happiness_Score double,
+ Log_GDP_per_capita double,
+ Social_support double,
+ Healthy_life_expectancy_at_birth double,
+ Freedom_to_make_life_choices double,
+ Generosity double,
+ Perceptions_of_corruption double,
+ Positive_affect double,
+ Negative_affect double,
+ Confidence_in_national_government double,
+ Democratic_Quality double,
+ Delivery_Quality double,
+ std_of_happiness_score double,
+ stdom_of_happiness_score double,
+ GINI_estimate double,
+ gini_of_household_income double
+);
