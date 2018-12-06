@@ -1,0 +1,31 @@
+<form name="scatterPlotForm">
+    <div layout="row">
+        <md-input-container flex="50">
+            <label>X</label>
+            <md-select name="type" ng-model="scatterPlot.col_x" required>
+                <md-option value="app"
+                           ng-repeat="col in $ctrl.colNames">{{ col }}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container flex="50">
+            <label>Y</label>
+            <md-select name="type" ng-model="scatterPlot.col_y" required>
+                <md-option value="app"
+                           ng-repeat="col in $ctrl.colNames">{{ col }}</md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div>
+        <md-button type="submit">Submit</md-button>
+    </div>
+</form>
+
+
+<div>
+    <canvas class="chart chart-line" chart-data="$ctrl.data"
+            chart-options="$ctrl.options"></canvas>
+</div>
+
+<div google-chart chart="$ctrl.myChartObject" style="height: 600px"></div>

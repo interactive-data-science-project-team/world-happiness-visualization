@@ -14,7 +14,7 @@
 
 import logging
 
-from flask import Flask, request
+from flask import Flask, redirect, request
 from jinja2 import Environment, PackageLoader
 
 # load data
@@ -77,12 +77,9 @@ def eda():
     template = env.get_template('data_exploratory/eda.html')
     return template.render(**eda_page_data_dict)
 
-
 @app.route('/analytics')
 def analytics():
-    template = env.get_template('analytics.html')
-    return template.render()
-
+    return redirect('static/analytics_app/index.html')
 
 @app.errorhandler(500)
 def server_error(e):
