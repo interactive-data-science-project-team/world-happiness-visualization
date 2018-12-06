@@ -105,7 +105,17 @@ def get_attributes():
     print(sql)
     cursor.execute(sql)
 
-    res = [[{'x': r[0], 'y': r[1]} for r in cursor.fetchall()]]
+    data = [r for r in cursor.fetchall()]
+    res = {
+        'chart': [[{'x': r[0], 'y': r[1]} for r in data]],
+        'google-chart': {
+            "cols": [
+                {'id': "x", 'label': x, 'type': "number"},
+                {'id': "y", 'label': y, 'type': "number"}
+            ],
+            "rows": [{'c':[{'v':r[0]},{'v':r[1]}]} for r in data]
+        }
+    }
 
     return json.dumps(res)
 
