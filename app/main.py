@@ -22,7 +22,7 @@ from jinja2 import Environment, PackageLoader
 from utils import read_csv_as_dict
 
 # load static data
-index_page_data_dict = {
+eda_page_data_dict = {
     'na_counts': read_csv_as_dict('data/na_counts.csv'),
     'summary_stats': read_csv_as_dict('data/summary_stats.csv'),
     'num_reports_by_year': read_csv_as_dict('data/num_report_by_year.csv')
@@ -39,8 +39,20 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    template = env.get_template('index.html')
-    return template.render(**index_page_data_dict)
+    template = env.get_template('data_story.html')
+    return template.render()
+
+
+@app.route('/eda')
+def eda():
+    template = env.get_template('data_exploratory/eda.html')
+    return template.render(**eda_page_data_dict)
+
+
+@app.route('/analytics')
+def analytics():
+    template = env.get_template('analytics.html')
+    return template.render()
 
 
 @app.errorhandler(500)
