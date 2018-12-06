@@ -6,14 +6,22 @@
         controller: scatterPlotCtrl
     });
 
-    function scatterPlotCtrl(dataService) {
+    function scatterPlotCtrl($scope, $log, dataService) {
         var ctrl = this;
 
-        this.$onInit = function () {
+        ctrl.$onInit = function () {
           dataService.getColumnNames()
               .then(function (colNames) {
                   ctrl.colNames = colNames;
               })
+        };
+
+        ctrl.getScatterDatapoints = function() {
+            dataService.getScatterDatapoints($scope.scatterPlot.colX, $scope.scatterPlot.colY)
+                .then(function (datapoints) {
+                    $log.debug('form submitted');
+                    ctrl.data = datapoints;
+                })
         };
 
         ctrl.data = [[{
