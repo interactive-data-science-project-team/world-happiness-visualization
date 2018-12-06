@@ -105,7 +105,7 @@ def get_attributes():
     print(sql)
     cursor.execute(sql)
 
-    res = [r for r in cursor.fetchall()]
+    res = [[{'x': r[0], 'y': r[1]} for r in cursor.fetchall()]]
 
     return json.dumps(res)
 
