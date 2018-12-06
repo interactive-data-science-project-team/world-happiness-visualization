@@ -14,13 +14,17 @@
 
 import logging
 
-from flask import Flask
+from flask import Flask, request
 from jinja2 import Environment, PackageLoader
 
 # load data
 from utils import read_csv_as_dict
 from utils import read_json_as_dict
 import json
+
+# connect mysql
+import os
+import MySQLdb
 
 # load static data
 eda_page_data_dict = {
@@ -30,6 +34,28 @@ eda_page_data_dict = {
 }
 
 mysql_table = read_json_as_dict('data/mysql/table.json')
+
+
+# mysql
+# These environment variables are configured in app.yaml.
+# CLOUDSQL_CONNECTION_NAME = os.environ.get('CLOUDSQL_CONNECTION_NAME')
+# CLOUDSQL_USER = os.environ.get('CLOUDSQL_USER')
+# CLOUDSQL_PASSWORD = os.environ.get('CLOUDSQL_PASSWORD')
+
+CLOUDSQL_DNS = os.environ.get('CLOUDSQL_DNS')
+CLOUDSQL_USER = os.environ.get('CLOUDSQL_USER')
+CLOUDSQL_PASSWORD = os.environ.get('CLOUDSQL_PASSWORD')
+CLOUDSQL_DB_NAME = os.environ.get('CLOUDSQL_DB_NAME')
+CLOUDSQL_TABLE_NAME = os.environ.get('CLOUDSQL_TABLE_NAME')
+
+def connect_to_cloudsql():
+    db = MySQLdb.connect(
+        host=CLOUDSQL_DNS, user=CLOUDSQL_USER, passwd=CLOUDSQL_PASSWORD,
+        db=CLOUDSQL_DB_NAME)
+
+    return db
+
+
 
 
 env = Environment(
@@ -64,8 +90,25 @@ def server_error(e):
     logging.exception('An error occurred during a request.')
     return 'An internal error occurred.', 500
 
+
 @app.route('/get_table')
 def get_table():
     print(type(mysql_table))
     return json.dumps(mysql_table)
+
+
+@app.route('/get_attributes', methods=['GET'])
+def get_attributes():
+    x = request.args['x']
+    y = request.args['y']
+
+    db = connect_to_cloudsql()
+    cursor = db.cursor()
+    sql = 'select {0}, {1} from {2} limit {3}'.format(x, y, CLOUDSQL_TABLE_NAME, 1000)
+    print(sql)
+    cursor.execute(sql)
+
+    res = [r for r in cursor.fetchall()]
+
+    return json.dumps(res)
 

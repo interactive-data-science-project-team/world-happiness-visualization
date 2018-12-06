@@ -20,3 +20,14 @@ libraries:
   version: latest
 - name: numpy
   version: latest
+- name: MySQLdb
+  version: "latest"
+
+# [START env_variables]
+env_variables:
+    CLOUDSQL_DNS: 35.227.73.149
+    CLOUDSQL_USER: root
+    CLOUDSQL_PASSWORD: 05839
+    CLOUDSQL_DB_NAME: world_happiness
+    CLOUDSQL_TABLE_NAME: score
+# [END env_variables]
