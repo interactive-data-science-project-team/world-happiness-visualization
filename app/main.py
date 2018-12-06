@@ -27,8 +27,9 @@ eda_page_data_dict = {
     'na_counts': read_csv_as_dict('data/na_counts.csv'),
     'summary_stats': read_csv_as_dict('data/summary_stats.csv'),
     'num_reports_by_year': read_csv_as_dict('data/num_report_by_year.csv'),
-    'mysql_table': read_json_as_dict('data/mysql/table.json')
 }
+
+mysql_table = read_json_as_dict('data/mysql/table.json')
 
 
 env = Environment(
@@ -65,6 +66,6 @@ def server_error(e):
 
 @app.route('/get_table')
 def get_table():
-    print(type(index_page_data_dict['mysql_table']))
-    return json.dumps(index_page_data_dict['mysql_table'])
+    print(type(mysql_table))
+    return json.dumps(mysql_table)
 
