@@ -11,8 +11,8 @@
             Choose any number of explanatory variables in the dropdown list below
             and click on <md-button ng-disabled="true" class="md-raised">Add Column</md-button> for each one you choose. Once
             you are satisfied, click on <md-button ng-disabled="true" class="md-raised">Plot</md-button>
-            and we will train a linear regression model on the cloud, and plot
-            the importance of each explanatory variables.
+            and we will train a linear regression model on the cloud using the covariates you choose as explanatory variables and happiness score as the target, and plot
+            the importance of each explanatory variables. Covariates that negatively impact happiness score will have a negative importance.
         </p>
 
 <form name="regPlotForm" ng-submit="$ctrl.plot($ctrl.regCols)">
