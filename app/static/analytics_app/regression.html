@@ -1,6 +1,23 @@
-hello world!
-<div layout="row" layout-align="center">
-    <canvas id="bar" class="chart chart-bar"
-            chart-data="$ctrl.data" chart-labels="$ctrl.labels"> chart-series="series"
-    </canvas>
-</div>
+<form name="regPlotForm" ng-submit="$ctrl.getScatterDatapoints()">
+    <div layout="row">
+        <md-input-container flex-gt-sm="30">
+            <label>X Axis</label>
+            <md-select name="type" ng-model="$ctrl.col" required>
+                <md-option ng-repeat="col in $ctrl.colNames"
+                           value="{{ col }}">{{ col }}</md-option>
+            </md-select>
+        </md-input-container>
+
+    </div>
+
+
+    <md-button md-no-ink class="md-primary"
+               ng-click="$ctrl.addColumn($ctrl.col)">Add Column
+    </md-button>
+
+    <md-button type="submit">Plot</md-button>
+</form>
+
+<md-chips ng-model="$ctrl.regCols" readonly="ctrl.readonly"
+          md-removable="ctrl.removable">
+</md-chips>
