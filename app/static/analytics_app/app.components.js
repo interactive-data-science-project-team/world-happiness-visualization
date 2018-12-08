@@ -35,15 +35,17 @@
     function regressionCtrl($log, dataService) {
         var ctrl = this;
 
-        dataService.getLinearRegressions(["Log_GDP_per_capita", "Social_support"])
+        dataService.getLinearRegressions(["Log_GDP_per_capita", "Social_support", "Perceptions_of_corruption", "Freedom_to_make_life_choices", "Generosity", "Negative_affect"])
             .then(function (resp) {
                 $log.debug(resp);
-                ctrl.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-                ctrl.series = ['Series A', 'Series B'];
+                $log.debug(resp.keys);
+                $log.debug(resp.values);
+
+                ctrl.labels = resp.keys;
+                ctrl.series = ["coefficient"];
 
                 ctrl.data = [
-                    [65, 59, 80, 81, 56, 55, 40],
-                    [28, 48, 40, 19, 86, 27, 90]
+                    resp.values
                 ];
             });
     }
