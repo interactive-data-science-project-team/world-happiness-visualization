@@ -26,6 +26,9 @@ import json
 import os
 import MySQLdb
 
+import math
+import numpy as np
+
 # load static data
 eda_page_data_dict = {
     'na_counts': read_csv_as_dict('data/na_counts.csv'),
@@ -98,17 +101,20 @@ def get_table():
 def get_attributes():
     x = request.args['x']
     y = request.args['y']
+    z = "Happiness_Score"
+
 
     db = connect_to_cloudsql()
     cursor = db.cursor()
-    sql = 'select {0}, {1} from {2} limit {3}'.format(x, y, CLOUDSQL_TABLE_NAME, 1000)
+    sql = 'select {0}, {1}, {2} from {3} limit {4}'.format(
+        x, y, z, CLOUDSQL_TABLE_NAME, 1000)
     print(sql)
     cursor.execute(sql)
 
     data = [r for r in cursor.fetchall()]
     res = {
-        'chart': [[{'x': r[0], 'y': r[1]} for r in data]],
-        'google-chart': {
+        'chart': [[{'x': r[0], 'y': r[1], 'r': math.pow(r[2], 1.2)} for r in data]],
+        'googlechart': {
             "cols": [
                 {'id': "x", 'label': x, 'type': "number"},
                 {'id': "y", 'label': y, 'type': "number"}
@@ -119,3 +125,36 @@ def get_attributes():
 
     return json.dumps(res)
 
+
+def linear_regression(X, Y):
+    d_X = np.ones((X.shape[0], X.shape[1] + 1))
+    d_X[:, 1:] = X
+    A = np.dot(np.transpose(d_X), d_X)
+    b = np.dot(np.transpose(d_X), Y)
+    beta = np.linalg.solve(A, b)
+    return beta
+
+
+@app.route('/get_linear_regression', methods=['POST'])
+def get_linear_regression():
+    columns = request.get_json()
+    print(columns)
+    columns_string = ','.join(columns)
+    db = connect_to_cloudsql()
+    cursor = db.cursor()
+    sql = 'select {0}, Happiness_Score from {1}'.format(columns_string, CLOUDSQL_TABLE_NAME)
+    print(sql)
+    cursor.execute(sql)
+    #
+    data = [r for r in cursor.fetchall()]
+    np_data = np.array(data)
+    X = np_data[:, :-1]
+    Y = np_data[:, -1]
+    X_norm = (X - np.amin(X, axis=0)) / (np.amax(X, axis=0) - np.amin(X, axis=0))
+    beta = linear_regression(X_norm, Y)
+
+    res = {"bias": beta[0]}
+    for i in range(len(columns)):
+        res[columns[i]] = beta[i+1]
+
+    return json.dumps(res)

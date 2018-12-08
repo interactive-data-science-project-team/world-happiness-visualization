@@ -19,7 +19,7 @@ libraries:
 - name: ssl
   version: latest
 - name: numpy
-  version: latest
+  version: "1.6.1"
 - name: MySQLdb
   version: "latest"
 

@@ -1,7 +1,6 @@
 {
   "table_name": "score",
   "columns": [
-    "country",
     "year",
     "Happiness_Score",
     "Log_GDP_per_capita",

@@ -20,10 +20,16 @@
             dataService.getScatterDatapoints($scope.scatterPlot.colX, $scope.scatterPlot.colY)
                 .then(function (datapoints) {
                     $log.debug('form submitted');
-                    ctrl.data = datapoints;
+                    ctrl.data = datapoints.chart;
+                    ctrl.myChartObject.data = datapoints.googlechart;
                 })
         };
 
+        dataService.getLinearRegressions(["Log_GDP_per_capita", "Social_support"])
+            .then(function (resp) {
+                $log.debug(resp);
+            });
+        /*
         ctrl.data = [[{
             x: -2,
             y: -5
@@ -38,8 +44,10 @@
                 x: 4,
                 y: 5
             }]];
+        */
 
         ctrl.options = {};
+        ctrl.series = ['X', 'Y'];
 
         ctrl.myChartObject = {};
 

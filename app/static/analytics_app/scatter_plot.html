@@ -1,16 +1,16 @@
 <form name="scatterPlotForm" ng-submit="$ctrl.getScatterDatapoints()">
-    <div layout="row">
-        <md-input-container flex="50">
-            <label>X</label>
+    <div layout="row" layout-sm="column">
+        <md-input-container flex-gt-sm="50">
+            <label>X Axis</label>
             <md-select name="type" ng-model="scatterPlot.colX" required>
-                <md-option ng-repeat="col in $ctrl.colNames">{{ col }}</md-option>
+                <md-option ng-repeat="col in $ctrl.colNames" value="{{ col }}">{{ col }}</md-option>
             </md-select>
         </md-input-container>
 
-        <md-input-container flex="50">
-            <label>Y</label>
+        <md-input-container flex-gt-sm="50">
+            <label>Y Axis</label>
             <md-select name="type" ng-model="scatterPlot.colY" required>
-                <md-option ng-repeat="col in $ctrl.colNames">{{ col }}</md-option>
+                <md-option ng-repeat="col in $ctrl.colNames" value="{{ col }}">{{ col }}</md-option>
             </md-select>
         </md-input-container>
     </div>
@@ -20,14 +20,11 @@
     </div>
 </form>
 
-<p>
-    x: {{ scatterPlot.colX }}
-</p>
-
-
-<div>
-    <canvas class="chart chart-line" chart-data="$ctrl.data"
-            chart-options="$ctrl.options"></canvas>
+<div layout="row" layout-align="center">
+<canvas class="chart chart-bubble" chart-data="$ctrl.data"
+        chart-options="$ctrl.options" ng-show="$ctrl.data" flex="80"></canvas>
 </div>
 
+<!--
 <div google-chart chart="$ctrl.myChartObject" style="height: 600px"></div>
+-->
