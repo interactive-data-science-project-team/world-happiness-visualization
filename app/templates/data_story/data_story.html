@@ -1,0 +1,174 @@
+{% extends "layout.html" %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% set active_page = "data_story" %}
+
+{% block title %}
+    World Happiness Score
+{% endblock %}
+
+{% block subtitle %}
+How is happiness made of?
+{% endblock %}
+
+{% block js %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+{% endblock %}
+
+{% block content %}
+    <h2>Introduction</h2>
+    <hr>
+    <p>
+        The happiness score is collected by the author of the World Happiness
+        Report
+        from
+        <a href="https://www.gallup.com/analytics/232838/world-poll.aspx">Gallup
+            World Poll.
+            (GWP)</a> by asking a question of life evaluation. In the Data Story, we
+        try
+        to answer the question, "what are the main contributing factors to
+        happiness?".
+        We answer this question by
+        regression analysis of 2017 Happiness Score using covariates like life
+        expectancy
+        at birth and confidence in national government as explanatory
+        variables.
+        We first use ordinary least square (OLD) with all explanatory variables, and we show that social
+        support and
+        and freedom to make life choice contribute the most to happiness
+        score, but
+        we also show that OLD is inadequate on this dataset because explanatory variables are strongly correlated.
+        So, we apply regularization and show that delivery quality and and healthy life expectation are important factors to happiness score
+        using LASSO analysis.
+    </p>
+
+    <h2>Dataset</h2>
+    <hr>
+
+    <p>
+        The dataset was collected by the <a href="http://unsdsn.org/">United
+        Nations Sustainable Development
+        Solutions Network</a> to produce the <a
+            href="http://worldhappiness.report/">World Happiness Report</a>,
+        its annual
+        publication that surveys the state of global happiness. The dataset
+        includes the happiness score for each country, their socioeconomic
+        attributes such as the GDP per capita, social support and healthy life
+        expectancy at birth, and the survey responses such as social support
+        and freedom to make life choices. The data covers the years from 2005
+        to 2017. Our <a href="/eda">data exploratory analysis</a> contains a link to detailed
+        explanations of all covariates and a thorough assessment of the data quality.
+    </p>
+
+    {% include 'tableau_viz/happiness_score_map.html' %}
+
+    <h2>Pre-processing</h2>
+    <hr>
+
+    <p>
+        Since our EDA shows that many records do not have the World Bank estimate
+    of GINI index, we drop this column entirely. We drop rows that contain <code>na</code>.
+        In addition, we drop columns
+    that we think are irrelevant to our analysis.
+
+    </p>
+
+    <pre><code>
+        happiness_data.drop(
+            columns=['Happiness Score',
+                'GINI index (World Bank estimate), average 2000-15',
+                'country',
+                'year',
+                'Standard deviation of happiness score by country-year',
+                'Standard deviation/Mean of happiness score by country-year',
+                'gini of household income reported in Gallup, by wp5-year'])
+    </code></pre>
+
+    <p>
+        We also scale the explanatory variables to \([0,1]\) so that we can compare the absolute values of learned
+    regression coefficients as a measurement of importance, <code>happiness_data.apply(lambda c: (c - c.min()) / (c.max() - c.min()))</code>.
+    </p>
+
+    <p>
+        We share our <a href="https://github.com/interactive-data-science-project-team/world-happiness-visualization/blob/master_part2/notebooks/prediction.ipynb">Jupyter notebook</a> for data pre-processing and
+        regression analysis.
+    </p>
+
+    <h2>Linear Regression with Ordinary Least Square</h2>
+    <hr>
+
+    <p>
+        We train a linear regression model using ordinary least square. We show
+    a summary of learned model below.
+    </p>
+
+    <pre><samp>{% include 'data_story/ols_output.txt' %}</samp></pre>
+
+    <p>
+        Since we scaled the explanatory variables, the absolute value of the learned
+    coefficient indicates how much a covariate contributes to happiness score.
+        The summary shows that log GDP per capita (<code>log_GDP</code>), positive effect (<code>positive_effect</code>), and social support (<code>social_support</code>)
+        play an important role in explaining the happiness score. On the other hand, negative effect (<code>negative_effect</code>) and delivery quality (<code>delivery_quality</code>)
+         are not statistically significant in this analysis
+       since their p-values are greater than 0.05.
+    </p>
+
+    <h2>LASSO Analysis</h2>
+    <hr>
+
+    <p>
+        To address high correlations between explanatory variables, we use linear
+        regression with L1 regularization, a.k.a LASSO,
+    $$ L = \sum_{i=1}^n (y_i - \vec{w}^T \vec{x}_i)^2 + \alpha \sum_{i=1}^k |w_i| $$
+    where \(y_i \) is the ground-truth happiness score, \(\vec{w}\) is the linear regression coefficient, and \(\alpha \)
+    is the size of L1 regularization.
+    </p>
+
+    <p>
+     We present a novel approach to analyze explanatory variable importance using LASSO. LASSO produces sparse
+    coefficient, which is a desired characteristic in analyzing the importance of
+    each covariate. Starting at \( \alpha= 0.25 \), we decrease L1 regularization
+    and plot the coefficients associated with each explanatory variable, (see the left plot below).
+    We also plot the score (see the right plot below), which is a number between 0 and 1 measuring the prediction accuracy on the training set.
+    </p>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <img src="static/images/lassocoef.png" class="img-fluid"
+                 alt="PairPlot">
+        </div>
+        <div class="col-xl-6">
+            <img src="static/images/lassoloss.png" class="img-fluid"
+                 alt="PairPlot">
+        </div>
+    </div>
+
+    <p>
+        The left plot above shows the importance of the covariates. The X-axis is \(-\alpha \), so \( -\alpha = -0.25 \)
+       means a high L1 penalty, and \( -\alpha = 0\) means no L1 penalty. So the L1 penalty
+       decreases along the X-axis. We see that when L1 penalty is the highest,
+       all coefficients are zero, and the model has a score of 0 (the right plot above).
+        But as we decrease L1 penalty, the coefficient associated with delivery quality (<code>delivery_quality</code>)
+      is the first one that becomes non-zero, which means it has a high importance in explaining happiness score. Surprisingly, this contradicts
+        our previous analysis using OLS.
+        Log GDP per capita (<code>log_GDP</code>) is the second covariate that starts to have non-zero coefficient
+       as L1 penalty decreases, which is consistent with the previous analysis we did using OLS. And so on. In general, the order in which coefficients pops in as we decrease the L1 penalty is a measurement of their relative importance.
+    </p>
+
+    <h2>Discussion</h2>
+    <hr>
+
+    <p>
+    In this section, we analyze what the contributing factors of happiness score are.
+    We train a linear regression using OLS, and we interpret the absolute value of the coefficients
+    as the relative importance of each explanatory variable. But linear regression
+    is hard to interpret when the correlations between explanatory variables are high, so we add a L1
+    penalty to the linear regression model and use a novel approach to measure variable importance.
+    We favour the LASSO analysis since it specifically address the problem of highly correlated covariates.
+    </p>
+
+
+
+{% endblock %}

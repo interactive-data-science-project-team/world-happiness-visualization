@@ -68,7 +68,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    template = env.get_template('data_story.html')
+    template = env.get_template('data_story/data_story.html')
     return template.render()
 
 
