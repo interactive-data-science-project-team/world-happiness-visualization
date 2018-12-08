@@ -45,13 +45,15 @@
         };
 
         ctrl.addColumn = function(col) {
-            if (!ctrl.regCols.includes(col)) {
+            if (!ctrl.regCols.includes(col) && col) {
                 ctrl.regCols.push(col)
             }
         };
 
         ctrl.plot = function(cols) {
-            dataService.getLinearRegressions(cols)
+            var filtered = cols.filter(c => ctrl.colNames.includes(c));
+
+            dataService.getLinearRegressions(filtered)
                 .then(function (resp) {
                     $log.debug(resp);
                     $log.debug(resp.keys);

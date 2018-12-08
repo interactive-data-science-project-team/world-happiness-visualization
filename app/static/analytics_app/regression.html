@@ -1,4 +1,6 @@
-<form name="regPlotForm" ng-submit="$ctrl.getScatterDatapoints()">
+Covariate Regression Importance Plot
+
+<form name="regPlotForm" ng-submit="$ctrl.plot($ctrl.regCols)">
     <div layout="row">
         <md-input-container flex-gt-sm="30">
             <label>X Axis</label>
@@ -10,14 +12,20 @@
 
     </div>
 
-
-    <md-button md-no-ink class="md-primary"
+    <md-button
                ng-click="$ctrl.addColumn($ctrl.col)">Add Column
     </md-button>
 
     <md-button type="submit">Plot</md-button>
+
+    <md-chips ng-model="$ctrl.regCols" readonly="ctrl.readonly"
+          md-removable="ctrl.removable">
+    </md-chips>
 </form>
 
-<md-chips ng-model="$ctrl.regCols" readonly="ctrl.readonly"
-          md-removable="ctrl.removable">
-</md-chips>
+
+<div layout="row" layout-align="center">
+    <canvas id="bar" class="chart chart-bar"
+            chart-data="$ctrl.data" chart-labels="$ctrl.labels"> chart-series="series"
+    </canvas>
+</div>
