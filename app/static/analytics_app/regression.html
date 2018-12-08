@@ -1,45 +1,47 @@
 <md-card>
-     <md-card-title>
-         <md-card-title-text>
-             <span class="md-headline">Covariate Importance Plot</span>
-         </md-card-title-text>
-         </md-card-title>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">Covariate Importance Plot</span>
+        </md-card-title-text>
+    </md-card-title>
 
     <md-card-content>
-
         <p>
-            Choose any number of explanatory variables in the dropdown list below
-            and click on <md-button ng-disabled="true" class="md-raised">Add Column</md-button> for each one you choose. Once
-            you are satisfied, click on <md-button ng-disabled="true" class="md-raised">Plot</md-button>
-            and we will train a linear regression model on the cloud using the covariates you choose as explanatory variables and happiness score as the target, and plot
-            the importance of each explanatory variables. Covariates that negatively impact happiness score will have a negative importance.
+            Choose any number of explanatory variables in list below by
+            clicking on them. Once
+            you are satisfied, click on
+            <md-button ng-disabled="true" class="md-raised">Plot</md-button>
+            and we will train a linear regression model on the cloud using the
+            covariates you choose as explanatory variables and happiness score
+            as the target, and plot
+            the importance of each explanatory variables. Covariates that
+            negatively impact happiness score will have a negative importance.
         </p>
 
-<form name="regPlotForm" ng-submit="$ctrl.plot($ctrl.regCols)">
-    <div layout="row">
-        <md-input-container flex-gt-sm="30">
-            <label>Column</label>
-            <md-select name="type" ng-model="$ctrl.col" required>
-                <md-option ng-repeat="col in $ctrl.colNames"
-                           value="{{ col }}">{{ col }}</md-option>
-            </md-select>
-        </md-input-container>
+        <form name="regPlotForm" ng-submit="$ctrl.plot($ctrl.regCols)">
 
-    </div>
+            <p>
+                <section layout="row" layout-wrap>
+                    <md-button ng-repeat="col in $ctrl.colNames"
+                               ng-click="$ctrl.addColumn(col)"
+                               class="md-raised">{{ col }}</md-button>
+                </section>
+            </p>
 
-    <md-button class="md-raised"
-               ng-click="$ctrl.addColumn($ctrl.col)">Add Column
-    </md-button>
+            <p>
+                Explanatory Variables:
+                <md-chips ng-model="$ctrl.regCols" readonly="ctrl.readonly"
+                          md-removable="ctrl.removable">
+                </md-chips>
+            </p>
 
-    <md-button type="submit" class="md-raised">Plot</md-button>
-
-    <md-chips ng-model="$ctrl.regCols" readonly="ctrl.readonly"
-          md-removable="ctrl.removable">
-    </md-chips>
-</form>
+            <div style="padding-top: 10px">
+                <md-button type="submit" class="md-raised">Plot</md-button>
+            </div>
+        </form>
 
 
-<div layout="row" layout-align="center">
+        <div layout="row" layout-align="center">
     <canvas id="bar" class="chart chart-bar"
             chart-data="$ctrl.data" chart-labels="$ctrl.labels"> chart-series="series"
     </canvas>

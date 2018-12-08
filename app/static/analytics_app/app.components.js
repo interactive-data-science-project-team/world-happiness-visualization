@@ -40,7 +40,7 @@
         ctrl.$onInit = function () {
           dataService.getColumnNames()
               .then(function (colNames) {
-                  ctrl.colNames = colNames;
+                  ctrl.colNames = colNames.filter(c => c !== "");
               })
         };
 
