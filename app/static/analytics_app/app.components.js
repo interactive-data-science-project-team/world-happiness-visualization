@@ -4,6 +4,9 @@
     angular.module('app').component('scatterPlot', {
         templateUrl: 'scatter_plot.html',
         controller: scatterPlotCtrl
+    }).component('regression', {
+        templateUrl: 'regression.html',
+        controller: regressionCtrl
     });
 
     function scatterPlotCtrl($scope, $log, dataService) {
@@ -88,5 +91,9 @@
         ctrl.myChartObject.options = {
             'title': 'How Much Pizza I Ate Last Night'
         };
+    }
+
+    function regressionCtrl($log) {
+
     }
 }());
