@@ -153,8 +153,7 @@ def get_linear_regression():
     X_norm = (X - np.amin(X, axis=0)) / (np.amax(X, axis=0) - np.amin(X, axis=0))
     beta = linear_regression(X_norm, Y)
 
-    res = {"bias": beta[0]}
-    for i in range(len(columns)):
-        res[columns[i]] = beta[i+1]
+    res = {'keys': columns,
+           'values': beta[1:].tolist()}
 
     return json.dumps(res)

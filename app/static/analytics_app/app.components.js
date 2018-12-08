@@ -48,6 +48,22 @@
             if (!ctrl.regCols.includes(col)) {
                 ctrl.regCols.push(col)
             }
+        };
+
+        ctrl.plot = function(cols) {
+            dataService.getLinearRegressions(cols)
+                .then(function (resp) {
+                    $log.debug(resp);
+                    $log.debug(resp.keys);
+                    $log.debug(resp.values);
+
+                    ctrl.labels = resp.keys;
+                    ctrl.series = ["coefficient"];
+
+                    ctrl.data = [
+                        resp.values
+                    ];
+                });
         }
     }
 }());
