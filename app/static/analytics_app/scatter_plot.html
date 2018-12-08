@@ -1,32 +1,51 @@
-Covariate Scatter Plot
+<md-card>
 
-<form name="scatterPlotForm" ng-submit="$ctrl.getScatterDatapoints()">
-    <div layout="row" layout-sm="column">
-        <md-input-container flex-gt-sm="50">
-            <label>X Axis</label>
-            <md-select name="type" ng-model="scatterPlot.colX" required>
-                <md-option ng-repeat="col in $ctrl.colNames" value="{{ col }}">{{ col }}</md-option>
-            </md-select>
-        </md-input-container>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">Covariate Scatter Plot</span>
+        </md-card-title-text>
+    </md-card-title>
 
-        <md-input-container flex-gt-sm="50">
-            <label>Y Axis</label>
-            <md-select name="type" ng-model="scatterPlot.colY" required>
-                <md-option ng-repeat="col in $ctrl.colNames" value="{{ col }}">{{ col }}</md-option>
-            </md-select>
-        </md-input-container>
-    </div>
+    <md-card-content>
 
-    <div>
-        <md-button type="submit">Submit</md-button>
-    </div>
-</form>
+        <p>
+            Choose any two variables in the dropdown lists below and click on <md-button ng-disabled="true" class="md-raised">Plot</md-button>, and we will
+            grab
+            the data on the fly and plot a scatter plot of the two variables
+            you choose.
+        </p>
 
-<div layout="row" layout-align="center">
-<canvas class="chart chart-bubble" chart-data="$ctrl.data"
-        chart-options="$ctrl.options" ng-show="$ctrl.data" flex="80"></canvas>
-</div>
+        <form name="scatterPlotForm" ng-submit="$ctrl.getScatterDatapoints()">
+            <div layout="row" layout-sm="column">
+                <md-input-container flex-gt-sm="50">
+                    <label>X Axis</label>
+                    <md-select name="type" ng-model="scatterPlot.colX"
+                               required>
+                        <md-option ng-repeat="col in $ctrl.colNames"
+                                   value="{{ col }}">{{ col }}</md-option>
+                    </md-select>
+                </md-input-container>
 
-<!--
-<div google-chart chart="$ctrl.myChartObject" style="height: 600px"></div>
--->
+                <md-input-container flex-gt-sm="50">
+                    <label>Y Axis</label>
+                    <md-select name="type" ng-model="scatterPlot.colY"
+                               required>
+                        <md-option ng-repeat="col in $ctrl.colNames"
+                                   value="{{ col }}">{{ col }}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div>
+                <md-button type="submit" class="md-raised">Plot</md-button>
+            </div>
+        </form>
+
+        <div layout="row" layout-align="center">
+            <canvas class="chart chart-bubble" chart-data="$ctrl.data"
+                    chart-options="$ctrl.options" ng-show="$ctrl.data"
+                    flex="80"></canvas>
+        </div>
+
+    </md-card-content>
+</md-card>

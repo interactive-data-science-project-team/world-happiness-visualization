@@ -1,9 +1,24 @@
-Covariate Regression Importance Plot
+<md-card>
+     <md-card-title>
+         <md-card-title-text>
+             <span class="md-headline">Covariate Importance Plot</span>
+         </md-card-title-text>
+         </md-card-title>
+
+    <md-card-content>
+
+        <p>
+            Choose any number of explanatory variables in the dropdown list below
+            and click on <md-button ng-disabled="true" class="md-raised">Add Column</md-button> for each one you choose. Once
+            you are satisfied, click on <md-button ng-disabled="true" class="md-raised">Plot</md-button>
+            and we will train a linear regression model on the cloud, and plot
+            the importance of each explanatory variables.
+        </p>
 
 <form name="regPlotForm" ng-submit="$ctrl.plot($ctrl.regCols)">
     <div layout="row">
         <md-input-container flex-gt-sm="30">
-            <label>X Axis</label>
+            <label>Column</label>
             <md-select name="type" ng-model="$ctrl.col" required>
                 <md-option ng-repeat="col in $ctrl.colNames"
                            value="{{ col }}">{{ col }}</md-option>
@@ -12,11 +27,11 @@ Covariate Regression Importance Plot
 
     </div>
 
-    <md-button
+    <md-button class="md-raised"
                ng-click="$ctrl.addColumn($ctrl.col)">Add Column
     </md-button>
 
-    <md-button type="submit">Plot</md-button>
+    <md-button type="submit" class="md-raised">Plot</md-button>
 
     <md-chips ng-model="$ctrl.regCols" readonly="ctrl.readonly"
           md-removable="ctrl.removable">
@@ -29,3 +44,5 @@ Covariate Regression Importance Plot
             chart-data="$ctrl.data" chart-labels="$ctrl.labels"> chart-series="series"
     </canvas>
 </div>
+        </md-card-content>
+</md-card>
