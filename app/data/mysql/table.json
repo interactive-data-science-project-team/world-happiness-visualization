@@ -1,7 +1,6 @@
 {
   "table_name": "score",
   "columns": [
-    "year",
     "Happiness_Score",
     "Log_GDP_per_capita",
     "Social_support",
@@ -13,10 +12,6 @@
     "Negative_affect",
     "Confidence_in_national_government",
     "Democratic_Quality",
-    "Delivery_Quality",
-    "std_of_happiness_score",
-    "stdom_of_happiness_score",
-    "GINI_estimate",
-    "gini_of_household_income"
+    "Delivery_Quality"
   ]
 }
